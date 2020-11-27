@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<p id="notice"><%= notice %></p>
+<p>
+  
+  <%=%>
+</p>
+  <p>
+  <strong>Title:</strong>
+  <%= @category.title %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <svg height="30" width="30">
+      <circle cx="15" cy="15" r="12" stroke="black" stroke-width="1" fill= "<%= @category.color %>"/>
+      Sorry, your browser does not support inline SVG.
+    </svg>
+</p>
+<p><strong>Amount of tasks:</strong> <%=current_user.tasks.where(:category_id => @category).count%></p>
+<p><strong>Created at:</strong>
+<%= @category.created_at %></p>
+<p><strong>Updated at:</strong>
+<%= @category.updated_at %></p>
+
+
+<h4>Tasks</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Deadline at</th>
+      <th>Title</th>
+      <th>Note</th>
+      <th>Is done</th>
+      <th>Created at</th>
+      <th>Updated at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <% @category.tasks.where(user_id: current_user.id).each do |task| %>
+
+  <tr>
+    <td><%= task.deadline_at %></td>
+    <td><%= task.title %></td>
+    <td><%= task.note %></td>
+    <% if task.is_done == true %>
+    <td>✓︎︎</td>
+    <% else %>
+    <td>✗</td>
+    <% end %>
+    <td><%= task.created_at %></td>
+    <td><%= task.updated_at %></td>
+    <td><%= link_to 'Show', task %></td>
+    <td><%= link_to 'Edit', edit_task_path(task) %></td>
+    <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+ <%end %>
+ </table>
+<br>
+<%= link_to 'Edit', edit_category_path(@category) %> |
+<%= link_to 'Back', categories_path %></br>
+<br>

@@ -1,0 +1,17 @@
+<h1>Account information</h1>
+<p>Your username: <%= current_user.username %> </p>
+<p>Your email: <%= current_user.email %> </p>
+<%= link_to "Edit",  edit_user_registration_path  , class: 'btn btn-primary' %>
+<style>
+   aside {
+    background: #f0f0f0;
+    padding: 10px;
+    width: 225px;
+    float: right;
+   }
+  </style>
+<aside>
+<p>             Usefull note!</p>
+   <p>If you dont like your username or u have changed your email you can easyly change them.</p>
+
+  </aside>

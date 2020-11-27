@@ -1,0 +1,26 @@
+
+<%= simple_form_for [@task] do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :deadline_at %>
+    <%= f.input :title %>
+    <%= f.input :note %>
+    <%= f.input :is_done %>
+    <p>Category: <%= f.select :category_id, current_user.categories.map { |c| [c.title, c.id, { class: c.id }] }, include_blank: true %> </p>
+
+    Tag:
+    <% current_user.tags.each_with_index do |tag, t_index| %>
+      <%= check_box_tag "task[tag_associations_attributes][#{t_index}][tag_id]", tag.id, @task.tags.pluck(:id).include?(tag.id) , id: tag.id %>
+      <% if tag.tag_associations.where(task_id: @task.id).last&.id  %>
+        <input class='destr' type="hidden" value="<%= tag.tag_associations.where(task_id: @task.id).last&.id %>" name="task[tag_associations_attributes][<%= t_index %>][id]" id="task_tag_associations_attributes_<%= t_index %>_id">
+      <% end %>
+      <%= tag.title %>
+    <% end %>
+  </div>
+<br>
+  <div class="form-actions">
+    <%= f.button :submit, class: "btn btn-primary" %>
+  </div>
+<% end %>

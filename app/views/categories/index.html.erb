@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+  <tbody>
+    <% if @categories.any? %>
+    <h1>Categories</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Color</th>
+          <th>Amount of tasks:</th>
+          <th>Created at</th>
+          <th>Updated at</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <% @categories.each_with_index do |category, x| %>
+
+      <tr>
+        <td><%= x+1 %></td>
+        <td><%= category.title %></td>
+
+      <td>  <svg height="30" width="30">
+          <circle cx="15" cy="15" r="12" stroke="black" stroke-width="1" fill= "<%= category.color %>"/>
+          Sorry, your browser does not support inline SVG.
+        </svg>
+
+        <td>  <%=current_user.tasks.where(:category_id => category).count%></td>
+        <td><%= category.created_at %></td>
+        <td><%= category.updated_at %></td>
+        <td><%= link_to 'Show', category %></td>
+        <td><%= link_to 'Edit', edit_category_path(category) %></td>
+        <td><%= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+ <%end %>
+      <% else %>
+    <h4>     You dont have any Category, use link belowe to create your first. </h4>
+       <%end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Category', new_category_path , class: 'btn btn-primary' %>
+
+       <br><br>

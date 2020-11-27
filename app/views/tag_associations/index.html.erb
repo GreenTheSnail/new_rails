@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tag Associations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tag_associations.each do |tag_association| %>
+      <tr>
+        <td><%= link_to 'Show', tag_association %></td>
+        <td><%= link_to 'Edit', edit_tag_association_path(tag_association) %></td>
+        <td><%= link_to 'Destroy', tag_association, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tag Association', new_tag_association_path %>

@@ -1,0 +1,64 @@
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @tag.title %>
+</p>
+
+<p>
+  <strong>Color:</strong>
+  <svg height="30" width="30">
+      <circle cx="15" cy="15" r="12" stroke="black" stroke-width="1" fill= "<%= @tag.color %>"/>
+      Sorry, your browser does not support inline SVG.
+    </svg>
+    <p>
+<p><strong>Amount of tasks:</strong> <%=current_user.tasks.joins(:tag_associations).where(tag_associations: {tag_id: @tag}).count%></p>
+      <strong>Created at:</strong>
+      <%= @tag.created_at %>
+    </p>
+    <p>
+      <strong>Updated at:</strong>
+      <%= @tag.updated_at %>
+    </p>
+</p>
+
+<h4>Tasks</h4>
+
+<table>
+  <thead>
+  <tr>
+    <th>Deadline at</th>
+    <th>Title</th>
+    <th>Note</th>
+    <th>Is done</th>
+    <th>Created at</th>
+    <th>Updated at</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <% @tag.tasks.where(user_id: current_user.id).each do |task| %>
+
+    <tr>
+      <td><%= task.deadline_at %></td>
+      <td><%= task.title %></td>
+      <td><%= task.note %></td>
+      <% if task.is_done == true %>
+        <td>✓︎︎</td>
+      <% else %>
+        <td>✗</td>
+      <% end %>
+      <td><%= task.created_at %></td>
+      <td><%= task.updated_at %></td>
+      <td><%= link_to 'Show', task %></td>
+      <td><%= link_to 'Edit', edit_task_path(task) %></td>
+      <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <%end %>
+</table>
+<br>
+
+
+<%= link_to 'Edit', edit_tag_path(@tag) %> |
+<%= link_to 'Back', tags_path %>
+<br><br>
